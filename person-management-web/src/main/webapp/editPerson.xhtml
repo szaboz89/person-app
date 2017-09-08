@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>JSF Spring Hibernate Example</title>
+</h:head>
+<h:body>
+
+    <ui:composition template="/template/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="personForm">
+
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+
+                <p:dataTable id="personTable" var="person" value="#{personController.persons}" editable="true"
+                             emptyMessage="No result"
+                             style="margin-bottom:40px">
+
+                    <p:ajax event="rowEdit" listener="#{personController.onRowEdit}" update="personForm:messages"/>
+
+                    <p:column headerText="Name" sortBy="#{person.name}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{person.name}"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{person.name}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="City" sortBy="#{person.city}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{person.city}"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{person.city}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Date of Birth" sortBy="#{person.dateOfBirth}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{person.dateOfBirth}"/></f:facet>
+                            <f:facet name="input"><p:calendar navigator="true" value="#{person.dateOfBirth}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Gender" sortBy="#{person.gender}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{person.gender}"/></f:facet>
+                            <f:facet name="input"><p:selectOneMenu value="#{person.gender}">
+                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                <f:selectItem itemLabel="Female" itemValue="Female" />
+                            </p:selectOneMenu></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column>
+                        <p:rowEditor/>
+                        <p:commandButton icon="ui-icon-close" title="Remove person"
+                                         actionListener="#{personController.removePerson(person)}" update="personForm">
+                            <p:confirm message="Are you sure?" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+
+
+</h:body>
+</html>

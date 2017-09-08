@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+<h:head>
+    <title>JSF Spring Hibernate Example</title>
+</h:head>
+<h:body>
+
+    <ui:composition template="/template/commonLayout.xhtml">
+
+        <ui:define name="content">
+
+            <h1>Add a Person</h1>
+            <h:form id="personForm">
+                <table>
+                    <tr>
+                        <td><p:outputLabel value="Name"/></td>
+                        <td><p:inputText id="name" value="#{personController.person.name}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="City"/></td>
+                        <td><p:inputText id="city" value="#{personController.person.city}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Date of Birth"/></td>
+                        <td><p:calendar id="dateOfBirth" value="#{personController.person.dateOfBirth}" navigator="true"/></td>
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Gender"/></td>
+                        <td>
+                            <p:selectOneMenu id="gender" value="#{personController.person.gender}">
+                                <f:selectItem itemLabel="Male" itemValue="Male" />
+                                <f:selectItem itemLabel="Female" itemValue="Female" />
+                            </p:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <p:commandButton action="#{personController.addPerson()}" value="Add Person"
+                                             update="personForm"/>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+                <br/>
+                <h3>Persons List</h3>
+                <p:dataTable id="personTable" var="person" value="#{personController.persons}" emptyMessage="No result">
+
+                    <p:column headerText="Name">
+                        <h:outputText value="#{person.name}"/>
+                    </p:column>
+
+                    <p:column headerText="City">
+                        <h:outputText value="#{person.city}"/>
+                    </p:column>
+
+                    <p:column headerText="Date of Birth">
+                        <h:outputText value="#{person.dateOfBirth}"/>
+                    </p:column>
+
+                    <p:column headerText="Gender">
+                        <h:outputText value="#{person.gender}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+
+</h:body>
+</html>
